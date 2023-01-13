@@ -15,6 +15,12 @@ export default class MyComponent extends LightningElement {
     @track currenObjectName;
     @track currenRecordId;
 
+    dataLoaded = false;
+    account;
+    name;
+    phone;
+    industry;
+    owner;
 
     @track columns = [
         { label: 'Name', fieldName: 'Name' },
@@ -25,24 +31,58 @@ export default class MyComponent extends LightningElement {
     @track currentAccount;
      
     @wire(getRecord, { recordId: '$recordId', fields: [NAME_FIELD, INDUSTRY_FIELD], optionalFields: [PHONE_FIELD, OWNER_NAME_FIELD] })
-    account;
+    wiredRecord({ error, data }) {
+        this.dataLoaded = false;
+        if (error) {
+            let message = 'Unknown error';
+            if (Array.isArray(error.body)) {
+                message = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                message = error.body.message;
+            }
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error loading account',
+                    message,
+                    variant: 'error',
+                }),
+            );
+        } else if (data) {
+            this.dataLoaded = true;
+            console.log('account Data', JSON.stringify(data, null, 2));
+            this.account = data;
+            this.name = this.account.fields.Name.value;
+            this.phone = this.account.fields.Phone.value;
+            this.owner = this.account.fields.Owner.value.fields.Name.value;
+            this.industry = this.account.fields.Industry.value;
 
-     get name() {
-        return getFieldValue(this.account.data, NAME_FIELD);
+            const event = {
+                target: {
+                    dataset: {
+                        ctxtype: 'interop'
+                    }
+                }
+            }
+            this.buttonClicked(event);
+        }
     }
 
-    get phone() {
-        return getFieldValue(this.account.data, PHONE_FIELD);
-    }
+    //  get name() {
+    //     return getFieldValue(this.account.data, NAME_FIELD);
+    // }
+
+    // get phone() {
+    //     return getFieldValue(this.account.data, PHONE_FIELD);
+    // }
 
     
-    get industry(){
-        return getFieldValue(this.account.data, INDUSTRY_FIELD);
-    }
+    // get industry(){
+    //     return getFieldValue(this.account.data, INDUSTRY_FIELD);
+    // }
     
-    get owner() {
-        return getFieldValue(this.account.data, OWNER_NAME_FIELD);
-    }
+    // get owner() {
+    //     return getFieldValue(this.account.data, OWNER_NAME_FIELD);
+    // }
 
     // constructor() {
     //     super();    
@@ -104,18 +144,21 @@ export default class MyComponent extends LightningElement {
 
     buttonClicked(event) {
 
-        console.log('openFin - Button Clicked  : ');
-        console.log('currentRecordId: ' + this.recordId);
-        console.log('currenObjectName: ' + this.objectApiName);
-
-        const accountObj = { recordId: this.recordId, objectApiName: this.objectApiName };
-
-        if (event.target.dataset.ctxtype === 'interop') {
-            this.setOpenFinContextWithInterop(accountObj);    
-        } else {
-            this.setOpenFinContextWithFdc3(accountObj);
+        if (event.target && event.target.dataset && event.target.dataset.ctxtype) {
+            console.log('openFin - Button Clicked  : ');
+            console.log('currentRecordId: ' + this.recordId);
+            console.log('currenObjectName: ' + this.objectApiName);
+    
+            const accountObj = { recordId: this.recordId, objectApiName: this.objectApiName };
+    
+            console.log('ctxType:', event.target.dataset.ctxtype);
+    
+            if (event.target.dataset.ctxtype === 'interop') {
+                this.setOpenFinContextWithInterop(accountObj);    
+            } else {
+                this.setOpenFinContextWithFdc3(accountObj);
+            }
         }
-        
 
     }
   async connectedCallback() {
