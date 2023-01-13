@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="OpenFin Connector" icon-name="custom:custom14">
+      <div class="slds-m-around_medium">
+        <div class="slds-m-around_medium" style="font-size: 1.6em;">
+
+            <lightning-button label="Interact with Another Application" onclick={buttonClicked} data-ctxtype="interop" slot="actions"></lightning-button>    
+            <!-- <lightning-button label="Send Context with FDC3" onclick={buttonClicked} data-ctxtype="fdc3" slot="actions"></lightning-button>     -->
+        </div>
+      </div>
+      <div class="slds-m-around_medium">
+        <div class="slds-m-around_medium">
+          <template if:true={account.data}>
+            <div class="slds-m-around_medium">
+                <p>Account Name: {name}</p>
+                <p>Industry: {industry}</p>
+                <p>Phone: {phone}</p>
+                <p>Owner: {owner}</p>
+            </div>
+        </template>
+    
+        </div>
+  
+      </div>
+      <!-- <div style="height: 500px;">
+
+        <template if:true={accountList}>
+             <lightning-datatable
+                     key-field="id"
+                     data={accountList}
+                     columns={columns}>
+             </lightning-datatable>
+        </template>
+        </div> -->
+    </lightning-card>
+  </template>

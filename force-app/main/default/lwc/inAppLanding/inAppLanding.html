@@ -1,0 +1,82 @@
+<template>
+    <lightning-card footer="" title="">
+        <h1 class="slds-text-heading_medium">{welcome_text}</h1>
+        <div class="c-container">
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <p class="c-description">{description}</p>
+
+                    <c-in-app-landing-child
+                        heading="Retail Banking Learning Experience" 
+                        cloud-detail="Get a 360-degree view of customers with Retail Banking, a Financial Services Cloud Lightning app. Bankers can also easily manage high-volume transactions on one screen with the Retail Banking Console. The information bankers need is supported with new objects, fields, and record types for loans, deposits, and more." 
+                        app="FinServ__FinancialServicesCloudRetailBanking"
+                        page="home"
+                        link-in-new-tab={pass_false}
+                        url="/lightning/app/FinServ__FinancialServicesCloudRetailBanking/page/home"
+                        link-reference="standard__namedPage"></c-in-app-landing-child>
+
+                    <c-in-app-landing-child
+                        heading="Wealth Management Learning Experience" 
+                        cloud-detail="Give your financial advisors a holistic view of customers with Wealth Management, a Financial Services Cloud Lightning app. Empower your advisors to deliver the personalized, proactive service that clients expect. Accelerate user productivity with technology that helps them engage with clients like never before, and build deeper, lasting, more profitable relationships." 
+                        app="FinServ__FSC_Lightning"
+                        page="home"
+                        link-in-new-tab={pass_false}
+                        url="/lightning/app/FinServ__FSC_Lightning/page/home"
+                        link-reference="standard__namedPage"></c-in-app-landing-child>
+
+                    <c-in-app-landing-child
+                        heading="Corporate and Investment Banking Learning Experience"
+                        cloud-detail="For investment banking and advisory teams." 
+                        app="c__FSC_Learning_Experience"
+                        page="CIB_Learning_Home"
+                        link-in-new-tab={pass_false}
+                        url="/lightning/app/c__FSC_Learning_Experience/n/CIB_Learning_Home"
+                        link-reference="standard__navItemPage"></c-in-app-landing-child>
+
+                    <template if:false={no_record_account}>
+                        <c-in-app-landing-child
+                            heading="FSC Insurance Learning Experience"
+                            cloud-detail="Insurance for Financial Services Cloud includes a new data model for insurance, new Lightning components, and a tailored Lightning console app: Insurance Agent Console. Insurance Agent Console helps agents and service reps track their performance and stay focused on their goals. With the new distributor performance dashboard, reports, and performance metrics, sales managers can view a consolidated performance summary for all their distributors or monitor their individual performances. Use the Insurance Agent Portal template to create a portal that gives independent insurance agents access to the insurance features and components and lets them manage and grow their books of business." 
+                            url="/lightning/app/FinServ__InsuranceConsoleFinancialServicesCloud/r/Account/{accountId}/view'}"
+                            app="FinServ__InsuranceConsoleFinancialServicesCloud"
+                            link-in-new-tab={pass_true}
+                            object-name="Account"
+                            object-id={accountId}
+                            link-reference="standard__recordPage"></c-in-app-landing-child>
+                    </template>
+                    <template if:true={no_record_account}>
+                        <c-in-app-landing-child
+                            heading="FSC Insurance Learning Experience"
+                            cloud-detail="Insurance for Financial Services Cloud includes a new data model for insurance, new Lightning components, and a tailored Lightning console app: Insurance Agent Console. Insurance Agent Console helps agents and service reps track their performance and stay focused on their goals. With the new distributor performance dashboard, reports, and performance metrics, sales managers can view a consolidated performance summary for all their distributors or monitor their individual performances. Use the Insurance Agent Portal template to create a portal that gives independent insurance agents access to the insurance features and components and lets them manage and grow their books of business." 
+                            url=""
+                            no-record={no_record_account}></c-in-app-landing-child>
+                    </template>
+
+                    <template if:false={no_record_loan_application}>
+                        <c-in-app-landing-child
+                            heading="Mortgage Learning Experience"
+                            cloud-detail="Mortgage for Financial Services Cloud includes a new data model for mortgage applications, new standard flow templates, and new flow screen components." 
+                            url="/lightning/app/FinServ__FSC_Lightning/r/ResidentialLoanApplication/{loanApplicationId}/view"
+                            app="FinServ__FSC_Lightning"
+                            link-in-new-tab={pass_true}
+                            object-name="ResidentialLoanApplication"
+                            object-id={loanApplicationId}
+                            link-reference="standard__recordPage"
+                            secondary-text-present={pass_true}
+                            secondary-text="Review all the Rachel Adams Residential Loan Application Sample record to see all the mortgage related features."></c-in-app-landing-child>
+                    </template>
+                    <template if:true={no_record_loan_application}>
+                        <c-in-app-landing-child
+                            heading="Mortgage Learning Experience"
+                            cloud-detail="Mortgage for Financial Services Cloud includes a new data model for mortgage applications, new standard flow templates, and new flow screen components." 
+                            url=""
+                            no-record={no_record_loan_application}
+                            secondary-text-present={pass_true}
+                            secondary-text="Review all the Rachel Adams Residential Loan Application Sample record to see all the mortgage related features."></c-in-app-landing-child>
+                    </template>
+                    
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>
