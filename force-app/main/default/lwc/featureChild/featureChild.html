@@ -1,0 +1,42 @@
+<template>
+    <div class="c-description">
+        <lightning-layout-item flexibility="auto">
+            <div class="custom-box">
+                <div>
+                    <lightning-icon icon-name={image} alternative-text={heading} title={heading}></lightning-icon>
+
+                    <a class="c-heading" onclick={handleClick}>{heading}</a>
+
+                    <template if:true={noRecord}>
+                        <div class="slds-text-body_small c-no-record">
+                            (There are NO records to navigate to - Clickable link will NOT work)
+                        </div>
+                    </template>
+                </div>
+
+                <p class="slds-text-body_regular c-feature-desc">{appText}</p>
+
+                <template if:true={secondaryTextPresent}>
+                    <lightning-formatted-rich-text class="slds-text-body_regular c-feature-desc-second" value={secondaryText}></lightning-formatted-rich-text>
+                </template>
+                
+                <template if:true={ternaryTextPresent}>
+                    <p class="slds-text-body_regular c-feature-desc"><b>{ternaryText}</b></p>
+                </template>
+
+                <template if:true={quaternaryTextPresent}>
+                    <lightning-formatted-rich-text class="slds-text-body_regular c-feature-desc-second" value={quaternaryText}></lightning-formatted-rich-text>
+                </template>
+
+                <template if:true={insideLinkPresent}>
+                    <div class="slds-text-body_regular c-feature-desc-second">
+                        {insideLinkBeforeText}
+                    	<lightning-formatted-url value={insideLink} label={insideLinkText} target="_blank"></lightning-formatted-url>
+                        {insideLinkAfterText}
+                    </div>
+                </template>
+
+            </div>
+        </lightning-layout-item>
+    </div>
+</template>

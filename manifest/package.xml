@@ -30,6 +30,14 @@
 	</types>
 	<types>
 		<members>*</members>
+		<name>LightningExperienceTheme</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>LightningMessageChannel</name>
+	</types>
+	<types>
+		<members>*</members>
 		<name>StaticResource</name>
 	</types>
 	<version>55.0</version>
